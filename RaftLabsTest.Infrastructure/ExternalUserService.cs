@@ -1,4 +1,5 @@
-﻿using RaftLabsTest.Application;
+﻿using Microsoft.Extensions.Caching.Memory;
+using RaftLabsTest.Application;
 using RaftLabsTest.Models;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,23 @@ namespace RaftLabsTest.Infrastructure
     public class ExternalUserService : IExternalUserService
     {
         private readonly HttpClient _httpClient;
+        private readonly IMemoryCache _cache;
 
-        public ExternalUserService(HttpClient httpClient)
+        public ExternalUserService(HttpClient httpClient, IMemoryCache cache)
         {
             _httpClient = httpClient;
+            _cache = cache;
         }
 
         public async Task<User> GetUserByIdAsync(int userId)
         {
+            string cacheKey = $"user_{userId}";
+
+            if (_cache.TryGetValue(cacheKey, out User cachedUser))
+            {
+                return cachedUser;
+            }
+
             var response = await _httpClient.GetAsync($"users/{userId}");
 
             if (!response.IsSuccessStatusCode)
@@ -34,17 +44,26 @@ namespace RaftLabsTest.Infrastructure
 
             var dto = JsonSerializer.Deserialize<UserDto>(userJson);
 
-            return new User
+            var user = new User
             {
                 Id = dto.id,
                 Email = dto.email,
                 FirstName = dto.first_name,
                 LastName = dto.last_name
             };
+            _cache.Set(cacheKey, user, TimeSpan.FromMinutes(5));
+            return user;
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
+            const string cacheKey = "all_users";
+
+            if (_cache.TryGetValue(cacheKey, out List<User> cachedUsers))
+            {
+                return cachedUsers;
+            }
+
             var users = new List<User>();
             int page = 1;
 
@@ -68,8 +87,11 @@ namespace RaftLabsTest.Infrastructure
                     FirstName = dto.first_name,
                     LastName = dto.last_name
                 }));
+
                 page++;
             }
+            _cache.Set(cacheKey, users, TimeSpan.FromMinutes(5));
+
             return users;
         }
     }

@@ -15,7 +15,7 @@ var host = Host.CreateDefaultBuilder(args)
             client.BaseAddress = new Uri(configuration["ReqResApi:BaseUrl"]??"");
             client.DefaultRequestHeaders.Add("x-api-key", configuration["ReqResApi:ApiKey"]);
         });
-        services.AddMemoryCache(); // optional
+        services.AddMemoryCache();
     })
     .Build();
 
