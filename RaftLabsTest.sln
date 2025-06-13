@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1 d17.14
+VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaftLabsTest.Models", "RaftLabsTest.Models\RaftLabsTest.Models.csproj", "{58C3309F-CAF9-4CF9-BCF9-E22DC38DE29F}"
 EndProject
@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaftLabsTest.Application", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaftLabsTest.Infrastructure", "RaftLabsTest.Infrastructure\RaftLabsTest.Infrastructure.csproj", "{9B1D61C1-1F35-4C18-BC90-2C4FFFD03B9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaftLabsTest.Tests", "RaftLabsTest.Tests\RaftLabsTest.Tests.csproj", "{8B395F87-C38B-4D4A-B431-7ECC2E205290}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaftLabsTest.ConsoleApp", "RaftLabsTest.ConsoleApp\RaftLabsTest.ConsoleApp.csproj", "{9F944F54-CADA-4240-838B-6DC47831B6BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaftLabsTest.Test", "RaftLabsTest.Test\RaftLabsTest.Test.csproj", "{093B22FA-3F92-4603-BBFE-F178C1BEA46B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{9B1D61C1-1F35-4C18-BC90-2C4FFFD03B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B1D61C1-1F35-4C18-BC90-2C4FFFD03B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B1D61C1-1F35-4C18-BC90-2C4FFFD03B9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B395F87-C38B-4D4A-B431-7ECC2E205290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B395F87-C38B-4D4A-B431-7ECC2E205290}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B395F87-C38B-4D4A-B431-7ECC2E205290}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B395F87-C38B-4D4A-B431-7ECC2E205290}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F944F54-CADA-4240-838B-6DC47831B6BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F944F54-CADA-4240-838B-6DC47831B6BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F944F54-CADA-4240-838B-6DC47831B6BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F944F54-CADA-4240-838B-6DC47831B6BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{093B22FA-3F92-4603-BBFE-F178C1BEA46B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{093B22FA-3F92-4603-BBFE-F178C1BEA46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{093B22FA-3F92-4603-BBFE-F178C1BEA46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{093B22FA-3F92-4603-BBFE-F178C1BEA46B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

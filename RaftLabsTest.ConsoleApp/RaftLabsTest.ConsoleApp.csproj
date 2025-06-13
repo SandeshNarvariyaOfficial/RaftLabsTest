@@ -10,7 +10,10 @@
     <ProjectReference Include="..\RaftLabsTest.Application\RaftLabsTest.Application.csproj" />
     <ProjectReference Include="..\RaftLabsTest.Infrastructure\RaftLabsTest.Infrastructure.csproj" />
     <ProjectReference Include="..\RaftLabsTest.Models\RaftLabsTest.Models.csproj" />
-    <ProjectReference Include="..\RaftLabsTest.Tests\RaftLabsTest.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

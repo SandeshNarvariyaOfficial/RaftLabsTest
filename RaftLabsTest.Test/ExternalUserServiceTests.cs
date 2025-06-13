@@ -1,11 +1,11 @@
-﻿
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using RaftLabsTest.Infrastructure;
+using RaftLabsTest.Models;
 using RichardSzalay.MockHttp;
 using System.Text.Json;
-using Xunit;
-namespace RaftLabsTest.Tests
+
+namespace RaftLabsTest.Test
 {
     public class ExternalUserServiceTests
     {
@@ -23,37 +23,64 @@ namespace RaftLabsTest.Tests
         }
 
         [Fact]
-        public async Task GetAllUsersAsync_ReturnsUsersList()
+        public async Task GetAllUsersAsync_ReturnsUsersAcrossMultiplePages()
         {
             // Arrange
             var mockHttp = new MockHttpMessageHandler();
 
+            // Page 1
+            var page1 = new UserListResponse
+            {
+                data = new List<UserDto>
+        {
+            new UserDto { id = 1, email = "a@test.com", first_name = "A", last_name = "One", avatar = "a1" },
+            new UserDto { id = 2, email = "b@test.com", first_name = "B", last_name = "Two", avatar = "b2" }
+        }
+            };
+
+            // Page 2
+            var page2 = new UserListResponse
+            {
+                data = new List<UserDto>
+        {
+            new UserDto { id = 3, email = "c@test.com", first_name = "C", last_name = "Three", avatar = "c3" }
+        }
+            };
+
+            // Page 3 - empty to end loop
+            var page3 = new UserListResponse
+            {
+                data = new List<UserDto>()
+            };
+
             mockHttp.When("https://reqres.in/api/users?page=1")
-                .Respond("application/json", JsonSerializer.Serialize(new
-                {
-                    data = new[]
-                    {
-                    new { id = 1, email = "george.bluth@reqres.in", first_name = "George", last_name = "Bluth", avatar = "url1" },
-                    new { id = 2, email = "janet.weaver@reqres.in", first_name = "Janet", last_name = "Weaver", avatar = "url2" }
-                    }
-                }));
+                .Respond("application/json", JsonSerializer.Serialize(page1));
+            mockHttp.When("https://reqres.in/api/users?page=2")
+                .Respond("application/json", JsonSerializer.Serialize(page2));
+            mockHttp.When("https://reqres.in/api/users?page=3")
+                .Respond("application/json", JsonSerializer.Serialize(page3));
 
             var client = new HttpClient(mockHttp)
             {
                 BaseAddress = new Uri("https://reqres.in/api/")
             };
-            client.DefaultRequestHeaders.Add("x-api-key", "dummy-api-key");
-            var memoryCache = new MemoryCache(new MemoryCacheOptions());
-            var service = new ExternalUserService(client , memoryCache);
+            var cache = new MemoryCache(new MemoryCacheOptions());
+
+            var service = new ExternalUserService(client, cache);
 
             // Act
             var users = await service.GetAllUsersAsync();
 
             // Assert
             Assert.NotNull(users);
-            Assert.Equal(2, users.Count());
-            Assert.Equal("George", users.First().FirstName);
+            Assert.Equal(3, users.Count());
+
+            Assert.Equal("A", users.ElementAt(0).FirstName);
+            Assert.Equal("B", users.ElementAt(1).FirstName);
+            Assert.Equal("C", users.ElementAt(2).FirstName);
         }
+
+
 
         [Fact]
         public async Task GetUserByIdAsync_ReturnsSingleUser()
